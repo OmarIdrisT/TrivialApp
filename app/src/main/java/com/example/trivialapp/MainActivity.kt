@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TrivialAppTheme {
+            TrivialAppTheme () {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -30,27 +30,16 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(Routes.LaunchScreen.route) { LaunchScreen(navigationController) }
                         composable(Routes.MenuScreen.route) { MenuScreen(navigationController) }
+                        composable(Routes.Settings.route) {Settings(navigationController)}
                         composable(
                             Routes.GameScreen.route,
                             arguments = listOf(navArgument("dificultatEscollida") {type = NavType.StringType})
                         ) { backStackEntry ->
                             GameScreen(
                                 navigationController,
-                                backStackEntry.arguments?.getString("dificultatEscollida") ?: "EASY",
-                                backStackEntry.arguments?.getBoolean("musicaOn") ?: true
-                            )
-                        }
-                        composable(
-                            Routes.ResultScreen.route,
-                            arguments = listOf(navArgument("victoria") {type = NavType.BoolType}, navArgument("tries") {type = NavType.IntType}, navArgument("dificultatEscollida") {type = NavType.StringType})
-                        ) {backStackEntry ->
-                            ResultScreen(
-                                navigationController,
-                                backStackEntry.arguments?.getBoolean("victoria") ?: false,
-                                backStackEntry.arguments?.getInt("tries") ?: 0,
-                                backStackEntry.arguments?.getString("dificultatEscollida") ?: "Easy",
-                                backStackEntry.arguments?.getBoolean("musicaOn") ?: true
-                            )
+                                backStackEntry.arguments?.getString("dificultatEscollida") ?: "FACIL"
+                            )}
+                        composable(Routes.ResultScreen.route) {ResultScreen(navigationController)
                         }
                     }
                 }
