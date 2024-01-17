@@ -21,7 +21,9 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -165,7 +167,11 @@ fun numberOfRounds(myViewModel: MyViewModel) {
             ) {
                 RadioButton(
                     selected = (text == selectedOption),
-                    onClick = { onOptionSelected(text) }
+                    onClick = { onOptionSelected(text) },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Cyan,
+                        unselectedColor = Color.White
+                    )
                 )
                 Text(
                     text = "$text",
@@ -177,7 +183,6 @@ fun numberOfRounds(myViewModel: MyViewModel) {
 
         }
     }
-    myViewModel.quantitatRondes(selectedOption)
 }
 
 
@@ -195,7 +200,12 @@ fun timePerRound(myViewModel: MyViewModel) {
                 value = myViewModel.tempsPerRonda,
                 onValueChange = {myViewModel.canviarTemps(it)},
                 valueRange = 10f..30f,
-                steps = 3
+                steps = 3,
+                colors = SliderDefaults.colors(
+                    thumbColor = Color.Cyan,
+                    activeTrackColor = Color.Cyan,
+                    inactiveTrackColor = Color.White
+                )
             )
         }
         Text(text = "${myViewModel.tempsPerRonda.toInt()} segons", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
