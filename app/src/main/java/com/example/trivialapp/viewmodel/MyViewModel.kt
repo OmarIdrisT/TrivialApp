@@ -29,5 +29,12 @@ class MyViewModel: ViewModel() {
         tempsPerRonda = valor
     }
 
+    var modeFosc : Boolean by mutableStateOf(false)
+        private set
+
+    fun canviarMode (valor: Boolean) {
+        modeFosc = valor
+    }
+
 }
 

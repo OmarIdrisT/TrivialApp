@@ -86,9 +86,9 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
             Text(text = "Mode fosc:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                 R.font.peachcake
             ))))
-            var modeFosc by rememberSaveable { mutableStateOf(false) }
-            Switch(checked = modeFosc,
-                onCheckedChange = { modeFosc = !modeFosc },
+
+            Switch(checked = myViewModel.modeFosc,
+                onCheckedChange = { myViewModel.canviarMode(it) },
                 colors = SwitchDefaults.colors(
                     uncheckedThumbColor = Color.White,
                     checkedThumbColor = Color.Cyan,
@@ -152,22 +152,21 @@ fun myDropDownMenu(myViewModel: MyViewModel) {
 @Composable
 fun numberOfRounds(myViewModel: MyViewModel) {
     val opcions = listOf(5, 10, 15)
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(opcions[0]) }
 
     Column(Modifier.selectableGroup()) {
         opcions.forEach { text ->
             Row(
                 Modifier
                     .selectable(
-                        selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text) }
+                        selected = (myViewModel.quantitatRondes == text),
+                        onClick = { myViewModel.canviarRondes(text) }
                     ),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (text == selectedOption),
-                    onClick = { onOptionSelected(text) },
+                    selected = (myViewModel.quantitatRondes == text),
+                    onClick = { myViewModel.canviarRondes(text)},
                     colors = RadioButtonDefaults.colors(
                         selectedColor = Color.Cyan,
                         unselectedColor = Color.White
