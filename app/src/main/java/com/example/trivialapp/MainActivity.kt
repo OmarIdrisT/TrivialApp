@@ -3,19 +3,26 @@ package com.example.trivialapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import com.example.trivialapp.navigation.Routes
+import com.example.trivialapp.viewmodel.MyViewModel
+import com.example.trivialapp.view.GameScreen
+import com.example.trivialapp.view.LaunchScreen
+import com.example.trivialapp.view.MenuScreen
+import com.example.trivialapp.view.ResultScreen
+import com.example.trivialapp.view.Settings
 import com.example.trivialapp.ui.theme.TrivialAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val myViewModel by viewModels<MyViewModel>()
         super.onCreate(savedInstanceState)
         setContent {
             TrivialAppTheme () {
@@ -29,18 +36,10 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.LaunchScreen.route
                     ) {
                         composable(Routes.LaunchScreen.route) { LaunchScreen(navigationController) }
-                        composable(Routes.MenuScreen.route) { MenuScreen(navigationController) }
-                        composable(Routes.Settings.route) {Settings(navigationController)}
-                        composable(
-                            Routes.GameScreen.route,
-                            arguments = listOf(navArgument("dificultatEscollida") {type = NavType.StringType})
-                        ) { backStackEntry ->
-                            GameScreen(
-                                navigationController,
-                                backStackEntry.arguments?.getString("dificultatEscollida") ?: "FACIL"
-                            )}
-                        composable(Routes.ResultScreen.route) {ResultScreen(navigationController)
-                        }
+                        composable(Routes.MenuScreen.route) { MenuScreen(navigationController, myViewModel) }
+                        composable(Routes.Settings.route) { Settings(navigationController, myViewModel) }
+                        composable(Routes.GameScreen.route){GameScreen(navigationController, myViewModel)}
+                        composable(Routes.ResultScreen.route) {ResultScreen(navigationController, myViewModel)}
                     }
                 }
             }

@@ -1,10 +1,11 @@
-package com.example.trivialapp
+package com.example.trivialapp.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,9 +43,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.trivialapp.R
+import com.example.trivialapp.navigation.Routes
+import com.example.trivialapp.viewmodel.MyViewModel
+
+
+val colorBotons = Color(0xffBB12F1)
 
 @Composable
-fun Settings(navController: NavController) {
+fun Settings(navController: NavController, myViewModel: MyViewModel) {
 
     Image(
         painter = painterResource(id = R.drawable.fondo),
@@ -58,30 +66,39 @@ fun Settings(navController: NavController) {
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(text = "Dificultat:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
-            val dificultatEscollida = myDropDownMenu()
+            Text(text = "Dificultat:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                R.font.peachcake
+            ))))
+            myDropDownMenu(myViewModel)
         }
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Text(text = "Nombre de rondes:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
-            val rondes = numberOfRounds()
+            Text(text = "Nombre de rondes:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                R.font.peachcake
+            ))))
+            numberOfRounds(myViewModel)
         }
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            val tempsRondes = timePerRound()
+            timePerRound(myViewModel)
         }
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Text(text = "Mode fosc:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+            Text(text = "Mode fosc:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                R.font.peachcake
+            ))))
             var modeFosc by rememberSaveable { mutableStateOf(false) }
             Switch(checked = modeFosc,
                 onCheckedChange = { modeFosc = !modeFosc },
                 colors = SwitchDefaults.colors(
                     uncheckedThumbColor = Color.White,
-                    checkedThumbColor = Color.Cyan
+                    checkedThumbColor = Color.Cyan,
+                    uncheckedTrackColor = Color.White,
+                    checkedTrackColor = colorBotons,
                 ))
         }
-        Box(modifier = Modifier
+        BoxWithConstraints(modifier = Modifier
             .width(130.dp)
-            .clickable { (navController.navigate(Routes.MenuScreen.route))}
-            .background(Color.DarkGray)
+            .clickable { (navController.navigate(Routes.MenuScreen.route)) }
+            .background(Color.Transparent)
+            .border(2.dp, Color.White, shape = RoundedCornerShape(16.dp))
             .height(60.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -94,15 +111,14 @@ fun Settings(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun myDropDownMenu(): String {
-    var dificultatGame by remember { mutableStateOf("FACIL") }
+fun myDropDownMenu(myViewModel: MyViewModel) {
     var expanded by remember { mutableStateOf(false) }
     val opcions = listOf("FACIL", "NORMAL", "DIFICIL")
 
     Column (modifier = Modifier.padding(20.dp)) {
         OutlinedTextField(
-            value = dificultatGame,
-            onValueChange = { dificultatGame = it },
+            value = myViewModel.dificultatEscollida,
+            onValueChange = { myViewModel.canviarDificultat(it) },
             enabled = false,
             readOnly = true,
             textStyle = TextStyle(color = Color.White, fontFamily = FontFamily(Font(R.font.peachcake)), fontSize = 20.sp, textAlign = TextAlign.Center),
@@ -110,7 +126,8 @@ fun myDropDownMenu(): String {
                 .clickable { expanded = true }
                 .width(120.dp)
                 .height(60.dp)
-                .background(color = Color.DarkGray)
+                .border(2.dp, Color.White, shape = RoundedCornerShape(16.dp))
+                .background(color = Color.Transparent)
                 .align(alignment = Alignment.CenterHorizontally)
         )
 
@@ -119,19 +136,19 @@ fun myDropDownMenu(): String {
             onDismissRequest = { expanded = false },
         ) {
             opcions.forEach { dificultat ->
-                DropdownMenuItem(modifier = Modifier.background(color = Color.Transparent) ,text = { Text(text = dificultat, style = TextStyle(color = Color.White, fontFamily = FontFamily(Font(R.font.peachcake)))) }, onClick = {
+                DropdownMenuItem(modifier = Modifier.background(color = Color.Transparent) ,text = { Text(text = dificultat, style = TextStyle(color = Color.White, fontFamily = FontFamily(Font(
+                    R.font.peachcake
+                )))) }, onClick = {
                     expanded = false
-                    dificultatGame = dificultat
+                    myViewModel.canviarDificultat(dificultat)
                 })
             }
         }
     }
-
-    return dificultatGame
 }
 
 @Composable
-fun numberOfRounds() {
+fun numberOfRounds(myViewModel: MyViewModel) {
     val opcions = listOf(5, 10, 15)
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(opcions[0]) }
 
@@ -152,32 +169,38 @@ fun numberOfRounds() {
                 )
                 Text(
                     text = "$text",
-                    style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake)))
+                    style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                        R.font.peachcake
+                    )))
                 )
             }
 
         }
     }
+    myViewModel.quantitatRondes(selectedOption)
 }
 
 
 @Composable
-fun timePerRound() {
-    var valorTemps by remember { mutableStateOf(20f) }
+fun timePerRound(myViewModel: MyViewModel) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth(0.7f)
     ) {
-        Text(text = "${valorTemps.toInt()} segons", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Temps per ronda:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+            Text(text = "Temps per ronda:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                R.font.peachcake
+            ))))
             Slider(
-                value = valorTemps,
-                onValueChange = {valorTemps = it},
+                value = myViewModel.tempsPerRonda,
+                onValueChange = {myViewModel.canviarTemps(it)},
                 valueRange = 10f..30f,
                 steps = 3
             )
         }
+        Text(text = "${myViewModel.tempsPerRonda.toInt()} segons", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+            R.font.peachcake
+        ))))
 
     }
 }
