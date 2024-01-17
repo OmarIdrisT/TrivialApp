@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.example.trivialapp.viewmodel.MyViewModel
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -39,7 +40,8 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun TrivialAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    myViewModel: MyViewModel,
+    darkTheme: Boolean = myViewModel.modeFosc,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit

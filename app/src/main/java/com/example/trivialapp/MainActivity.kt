@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         val myViewModel by viewModels<MyViewModel>()
         super.onCreate(savedInstanceState)
         setContent {
-            TrivialAppTheme () {
+            TrivialAppTheme (myViewModel) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
