@@ -138,7 +138,7 @@ fun myDropDownMenu(myViewModel: MyViewModel) {
             onDismissRequest = { expanded = false },
         ) {
             opcions.forEach { dificultat ->
-                DropdownMenuItem(modifier = Modifier.background(color = Color.Transparent) ,text = { Text(text = dificultat, style = TextStyle(color = Color.White, fontFamily = FontFamily(Font(
+                DropdownMenuItem(modifier = Modifier.background(color = Color.Black) ,text = { Text(text = dificultat, style = TextStyle(color = Color.White, fontFamily = FontFamily(Font(
                     R.font.peachcake
                 )))) }, onClick = {
                     expanded = false

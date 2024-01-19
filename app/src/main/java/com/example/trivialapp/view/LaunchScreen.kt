@@ -61,6 +61,7 @@ fun Splash(alphaAnim: Float) {
                 fontSize = 40.sp,
                 fontFamily = FontFamily(Font(R.font.peachcake)),
                 fontWeight = FontWeight.SemiBold,
+                color = Color.White
             )
         }
     }

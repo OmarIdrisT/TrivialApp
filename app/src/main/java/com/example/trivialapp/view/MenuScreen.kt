@@ -51,8 +51,7 @@ fun MenuScreen(navController: NavController, myViewModel: MyViewModel) {
             Spacer(modifier = Modifier.height(30.dp))
             Box(modifier = Modifier
                 .width(130.dp)
-                .clickable {
-                                    }
+                .clickable { navController.navigate(Routes.GameScreen.route)}
                 .background(Color.Transparent)
                 .border(2.dp,Color.White, shape = RoundedCornerShape(16.dp))
                 .height(60.dp),
