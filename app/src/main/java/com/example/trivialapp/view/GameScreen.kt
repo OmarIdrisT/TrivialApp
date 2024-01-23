@@ -29,15 +29,21 @@ import com.example.trivialapp.R
 import com.example.trivialapp.model.PreguntasYRespuestas
 import com.example.trivialapp.navigation.Routes
 import com.example.trivialapp.viewmodel.MyViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
-    var trivial : PreguntasYRespuestas.quiz
+    var trivial: MutableList<PreguntasYRespuestas.quiz>
+    var score by remember { mutableStateOf(0) }
+
     when(myViewModel.dificultatEscollida) {
-        "FACIL" -> trivial = questionariEasy.random()
-        "NORMAL" -> trivial = questionariEasy.random()
-        else -> trivial = questionariEasy.random()
+        "FACIL" -> trivial = questionariEasy
+        "NORMAL" -> trivial = questionariEasy
+        else -> trivial = questionariEasy
     }
     var numeroRonda by remember { mutableStateOf(1) }
     var missatgeRondes = "Ronda $numeroRonda/${myViewModel.quantitatRondes}"
@@ -52,201 +58,239 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val seleccioQuiz = trivial.random()
+        val preguntaQuiz = seleccioQuiz.question
         Text(text = missatgeRondes)
-        Text(text = trivial.question)
-        var numeroRespostes = 1
-            repeat(2) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .border(3.dp, Color.White)
-                        .fillMaxHeight(0.15f),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    repeat(2) {
-                        Box(
-                            modifier = Modifier
-                                .background(Color.Transparent)
-                                .border(2.dp, Color.White, shape = RoundedCornerShape(16.dp))
-                                .fillMaxHeight(0.8f)
-                                .fillMaxWidth(0.4f)
-                                .weight(0.3f)
-                                .clickable {
+        Text(text = preguntaQuiz)
+        repeat(2) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(3.dp, Color.White)
+                    .fillMaxHeight(0.15f),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+
+                repeat(2) {
+                    val respuesta = seleccioQuiz.answers.random()
+                    var colorResposta = Color.Transparent
+                    Box(
+                        modifier = Modifier
+                            .background(colorResposta)
+                            .border(2.dp, Color.White, shape = RoundedCornerShape(16.dp))
+                            .fillMaxHeight(0.8f)
+                            .fillMaxWidth(0.4f)
+                            .weight(0.3f)
+                            .clickable {
+                                if (numeroRonda < myViewModel.quantitatRondes) {
+                                    if (respuesta == seleccioQuiz.correctAnswer) {
+                                        colorResposta = Color.Green
+                                        score++
+
+                                    }
+                                    else {
+                                        colorResposta = Color.Red
+                                    }
                                     numeroRonda++
                                 }
+                                else {
+                                    navController.navigate(Routes.ResultScreen.route)
+                                }
+                            }
 
-                        ) {
-                            Text(trivial.answer1)
-                        }
+                    ) {
+                        Text(respuesta)
+                        seleccioQuiz.answers.remove(respuesta)
                     }
                 }
             }
-    }
-    if (numeroRonda == myViewModel.quantitatRondes + 1) {
-            missatgeRondes = "Ronda ${myViewModel.quantitatRondes}/${myViewModel.quantitatRondes}"
-            navController.navigate(Routes.ResultScreen.route)
+        }
+        trivial.remove(seleccioQuiz)
+        Text("Score: $score")
     }
 }
 
 
-val questionariEasy = arrayOf(
+val questionariEasy = mutableListOf(
     PreguntasYRespuestas.quiz(
         "¿Cuál fue el detonante de la Primera Guerra Mundial?",
-        "El asesinato del archiduque Francisco Fernando de Habsburgo.",
-        "La firma del Tratado de Versalles.",
-        "El hundimiento del Titanic.",
-        "La Revolución Rusa.",
+        mutableListOf(
+            "El asesinato del archiduque Francisco Fernando de Habsburgo.",
+            "La firma del Tratado de Versalles.",
+            "El hundimiento del Titanic.",
+            "La Revolución Rusa."),
         "El asesinato del archiduque Francisco Fernando de Habsburgo."
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién fue el primer presidente de Estados Unidos?",
-        "George Washington.",
-        "Abraham Lincoln.",
-        "Thomas Jefferson.",
-        "Benjamin Franklin.",
+        mutableListOf(
+            "George Washington.",
+            "Abraham Lincoln.",
+            "Thomas Jefferson.",
+            "Benjamin Franklin."),
         "George Washington."
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué año se disolvió la Unión Soviética?",
-        "1989.",
-        "1991.",
-        "1993.",
-        "1995.",
+        mutableListOf(
+            "1989.",
+            "1991.",
+            "1993.",
+            "1995."),
         "1991."
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el idioma más hablado en Suiza?",
-        "Alemán.",
-        "Francés.",
-        "Italiano.",
-        "Rumano.",
+        mutableListOf(
+            "Alemán.",
+            "Francés.",
+            "Italiano.",
+            "Rumano."),
         "Alemán."
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué disciplina deportiva juega Leo Messi?",
-        "Fútbol.",
-        "Tenis.",
-        "Baloncesto.",
-        "Golf.",
+        mutableListOf("Fútbol.",
+            "Tenis.",
+            "Baloncesto.",
+            "Golf."),
         "Fútbol."
     ),
     PreguntasYRespuestas.quiz(
         "¿Dónde se encuentra la Torre de Pisa?",
-        "Roma, Italia.",
-        "Florencia, Italia.",
-        "Venecia, Italia.",
-        "Pisa, Italia.",
+        mutableListOf(
+            "Roma, Italia.",
+            "Florencia, Italia.",
+            "Venecia, Italia.",
+            "Pisa, Italia."),
         "Pisa, Italia."
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el océano más grande del mundo?",
-        "Océano Atlántico.",
-        "Océano Índico.",
-        "Océano Pacífico.",
-        "Océano Ártico.",
+        mutableListOf(
+            "Océano Atlántico.",
+            "Océano Índico.",
+            "Océano Pacífico.",
+            "Océano Ártico."),
+
         "Océano Pacífico."
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es la capital de Indonesia?",
-        "Yakarta.",
-        "Bangkok.",
-        "Kuala Lumpur.",
-        "Manila.",
+        mutableListOf(
+            "Yakarta.",
+            "Bangkok.",
+            "Kuala Lumpur.",
+            "Manila."),
         "Yakarta."
     ),
     PreguntasYRespuestas.quiz(
         "¿Quiénes son los protagonistas de la película 'Pretty Woman'?",
-        "Julia Roberts y Richard Gere.",
-        "Sandra Bullock y Tom Hanks.",
-        "Jennifer Aniston y Brad Pitt.",
-        "Angelina Jolie y Johnny Depp.",
+        mutableListOf(
+            "Julia Roberts y Richard Gere.",
+            "Sandra Bullock y Tom Hanks.",
+            "Jennifer Aniston y Brad Pitt.",
+            "Angelina Jolie y Johnny Depp."),
         "Julia Roberts y Richard Gere."
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el río más largo de Europa Occidental?",
-        "Río Támesis.",
-        "Río Rin.",
-        "Río Sena.",
-        "Río Danubio.",
+        mutableListOf(
+            "Río Támesis.",
+            "Río Rin.",
+            "Río Sena.",
+            "Río Danubio."),
         "Río Rin."
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es la capital de Francia?",
-        "París",
-        "Londres",
-        "Madrid",
-        "Berlín",
+        mutableListOf(
+            "París",
+            "Londres",
+            "Madrid",
+            "Berlín"),
         "París"
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué año comenzó la Segunda Guerra Mundial?",
-        "1914",
-        "1939",
-        "1945",
-        "1941",
+        mutableListOf(
+            "1914",
+            "1939",
+            "1945",
+            "1941"),
         "1939"
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién escribió la obra de Romeo y Julieta?",
-        "William Shakespeare",
-        "Miguel de Cervantes",
-        "Charles Dickens",
-        "Jane Austen",
+        mutableListOf(
+            "William Shakespeare",
+            "Miguel de Cervantes",
+            "Charles Dickens",
+            "Jane Austen"),
         "William Shakespeare"
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el océano más grande del mundo?",
-        "Océano Atlántico",
-        "Océano Índico",
-        "Océano Pacífico", "Océano Ártico",
+        mutableListOf(
+            "Océano Atlántico",
+            "Océano Índico",
+            "Océano Pacífico",
+            "Océano Ártico"),
         "Océano Pacífico"
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el país más grande del mundo por área?",
-        "Rusia",
-        "Canadá",
-        "Estados Unidos",
-        "China",
+        mutableListOf(
+            "Rusia",
+            "Canadá",
+            "Estados Unidos",
+            "China"),
         "Rusia"
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el animal terrestre más grande?",
-        "Elefante africano",
-        "Jirafa",
-        "Rinoceronte blanco",
-        "Hipopótamo",
+        mutableListOf(
+            "Elefante africano",
+            "Jirafa",
+            "Rinoceronte blanco",
+            "Hipopótamo"),
         "Elefante africano"
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es la montaña más alta del mundo?",
-        "Monte Everest",
-        "Monte Kilimanjaro",
-        "Monte McKinley",
-        "Monte Aconcagua",
+        mutableListOf(
+            "Monte Everest",
+            "Monte Kilimanjaro",
+            "Monte McKinley",
+            "Monte Aconcagua"),
         "Monte Everest"
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el idioma más hablado en el mundo?",
-        "Inglés",
-        "Chino mandarín",
-        "Español",
-        "Hindi",
+        mutableListOf(
+            "Inglés",
+            "Chino mandarín",
+            "Español",
+            "Hindi"),
         "Chino mandarín"
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué país se encuentra la Torre Eiffel?",
-        "España",
-        "Italia",
+        mutableListOf(
+            "España",
+            "Italia",
+            "Francia",
+            "Alemania"),
         "Francia",
-        "Alemania",
-        "Francia"
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién pintó La Mona Lisa?",
-        "Vincent van Gogh",
-        "Leonardo da Vinci",
-        "Pablo Picasso",
-        "Michelangelo",
+        mutableListOf(
+            "Vincent van Gogh",
+            "Leonardo da Vinci",
+            "Pablo Picasso",
+            "Michelangelo"),
         "Leonardo da Vinci"
     )
 )
+
