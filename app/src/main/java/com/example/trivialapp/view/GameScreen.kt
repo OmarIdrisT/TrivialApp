@@ -52,6 +52,9 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         "NORMAL" -> trivial = questionariEasy
         else -> trivial = questionariEasy
     }
+
+    trivial.shuffled()
+
     var numeroRonda by remember { mutableStateOf(1) }
     var missatgeRondes = "Ronda $numeroRonda/${myViewModel.quantitatRondes}"
     Image(
@@ -65,8 +68,10 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val seleccioQuiz = trivial.random()
+        val seleccioQuiz = trivial[numeroRonda - 1]
         val preguntaQuiz = seleccioQuiz.question
+        val respuestas = seleccioQuiz.answers.shuffled()
+
         Text(text = missatgeRondes, style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
         Text(text = preguntaQuiz, style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
         Image(
@@ -82,10 +87,9 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
             ) {
 
                 repeat(2) {
-                    val respuesta = seleccioQuiz.answers.random()
+                    val respuesta = respuestas[it]
                     OutlinedButton(
                         onClick = {
-
                             if (respuesta == seleccioQuiz.correctAnswer) {
                                 score++
                             }
@@ -101,12 +105,10 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                             .width(200.dp)
                     ) {
                         Text(text = respuesta, style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
-                        seleccioQuiz.answers.remove(respuesta)
                     }
                 }
             }
         }
-        trivial.remove(seleccioQuiz)
         Text(text ="Score: $score" , style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
     }
 }
