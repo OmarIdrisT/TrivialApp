@@ -2,6 +2,8 @@ package com.example.trivialapp.view
 
 import android.os.Handler
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +37,10 @@ import com.example.trivialapp.model.PreguntasYRespuestas
 import com.example.trivialapp.navigation.Routes
 import com.example.trivialapp.viewmodel.MyViewModel
 import com.example.trivialapp.viewmodel.questionariEasy
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
@@ -78,31 +84,44 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
             modifier = Modifier
                 .fillMaxWidth(0.6f)
                 .fillMaxHeight(0.3f))
-        repeat(2) {
+        repeat(2) {row ->
             Row(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                repeat(2) {
-                    val respuesta = respuestas[it]
+                repeat(2) { column ->
+                    val index = row * 2 + column
+                    val respuesta = respuestas[index]
+                    var colorResposta by remember { mutableStateOf(Color.Transparent) }
                     OutlinedButton(
                         onClick = {
                             if (respuesta == seleccioQuiz.correctAnswer) {
                                 score++
-                            }
-                            if (numeroRonda < myViewModel.quantitatRondes) {
-                                numeroRonda++
+                                colorResposta = Color.Green
 
-                            } else {
+                            }
+                            else {
+                                colorResposta = Color.Red
+                            }
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+
+                                // Realizar acciones adicionales después del retraso
+                                colorResposta = Color.Transparent
+                                if (numeroRonda < myViewModel.quantitatRondes) {
+                                    numeroRonda++
+                                } else {
                                     navController.navigate(Routes.ResultScreen.route)
+                                }
                             }
                         },
                         modifier = Modifier
                             .height(100.dp)
-                            .width(200.dp)
+                            .width(150.dp)
+                            .background(colorResposta)
                     ) {
-                        Text(text = respuesta, style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+                        Text(text = respuesta, style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
                     }
                 }
             }
