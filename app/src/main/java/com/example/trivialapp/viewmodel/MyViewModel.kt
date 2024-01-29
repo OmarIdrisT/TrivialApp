@@ -3,6 +3,7 @@ package com.example.trivialapp.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.trivialapp.R
 import com.example.trivialapp.model.PreguntasYRespuestas
@@ -36,6 +37,18 @@ class MyViewModel: ViewModel() {
 
     fun canviarMode (valor: Boolean) {
         modeFosc = valor
+        fonsPantalla = if(modeFosc) {
+            R.drawable.fonsfosc
+        }
+        else {
+            R.drawable.fonsclar
+        }
+        colorText = if(modeFosc) {
+            Color.White
+        }
+        else {
+            Color.Black
+        }
     }
 
     var score : Int by mutableStateOf(0)
@@ -43,6 +56,20 @@ class MyViewModel: ViewModel() {
 
     fun incrementarScore (valor:Int) {
         score = valor
+    }
+
+    var fonsPantalla = if(modeFosc) {
+        R.drawable.fonsfosc
+    }
+    else {
+        R.drawable.fonsclar
+    }
+
+    var colorText = if(modeFosc) {
+        Color.White
+    }
+    else {
+        Color.Black
     }
 
 }

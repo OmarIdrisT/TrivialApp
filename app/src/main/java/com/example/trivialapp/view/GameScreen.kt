@@ -53,42 +53,10 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
     var numeroRonda by remember { mutableStateOf(1) }
     var missatgeRondes = "Ronda $numeroRonda/${myViewModel.quantitatRondes}"
 
-    var timerRunning by remember { mutableStateOf(true) }
 
-    DisposableEffect(numeroRonda) {
-        val handler = Handler()
-
-        // Este efecto se ejecutará cada vez que numeroRonda cambie
-        if (timerRunning) {
-            handler.removeCallbacksAndMessages(null) // Reinicia el temporizador al cambiar de ronda
-        }
-
-        // Inicializa y comienza el temporizador para la nueva ronda
-        val runnable = object : Runnable {
-            override fun run() {
-                if (numeroRonda < myViewModel.quantitatRondes) {
-                    // Lógica para cambiar de ronda aquí
-                    numeroRonda++
-                    // Reinicia el temporizador para la nueva ronda
-                    handler.postDelayed(this, myViewModel.tempsPerRonda.toLong())
-                } else {
-                    navController.navigate(Routes.ResultScreen.route)
-                }
-            }
-        }
-
-        // Iniciar el temporizador
-        handler.postDelayed(runnable, myViewModel.tempsPerRonda.toLong())
-
-        // Limpieza cuando el efecto se deje de ejecutar (por ejemplo, cuando el Composable se destruye)
-        onDispose {
-            handler.removeCallbacksAndMessages(null)
-            timerRunning = false
-        }
-    }
 
     Image(
-        painter = painterResource(id = R.drawable.fondo),
+        painter = painterResource(id = myViewModel.fonsPantalla),
         contentDescription = null,
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.FillBounds
@@ -102,8 +70,8 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         val preguntaQuiz = seleccioQuiz.question
         val respuestas = seleccioQuiz.answers.shuffled()
 
-        Text(text = missatgeRondes, style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
-        Text(text = preguntaQuiz, style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+        Text(text = missatgeRondes, style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+        Text(text = preguntaQuiz, style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
         Image(
             painter = painterResource(id = seleccioQuiz.image),
             contentDescription = null,
@@ -134,13 +102,13 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                             .height(100.dp)
                             .width(200.dp)
                     ) {
-                        Text(text = respuesta, style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+                        Text(text = respuesta, style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
                     }
                 }
             }
         }
 
-        Text(text ="Score: $score" , style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+        Text(text ="Score: $score" , style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
 
     }
 }

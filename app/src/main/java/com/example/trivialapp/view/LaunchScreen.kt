@@ -39,7 +39,7 @@ fun Splash(alphaAnim: Float) {
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.fonsclar),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
@@ -61,7 +61,6 @@ fun Splash(alphaAnim: Float) {
                 fontSize = 40.sp,
                 fontFamily = FontFamily(Font(R.font.peachcake)),
                 fontWeight = FontWeight.SemiBold,
-                color = Color.White
             )
         }
     }

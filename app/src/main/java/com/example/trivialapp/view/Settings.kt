@@ -56,7 +56,7 @@ val colorBotons = Color(0xffBB12F1)
 fun Settings(navController: NavController, myViewModel: MyViewModel) {
 
     Image(
-        painter = painterResource(id = R.drawable.fondo),
+        painter = painterResource(id = myViewModel.fonsPantalla),
         contentDescription = null,
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.FillBounds
@@ -68,13 +68,13 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(text = "Dificultat:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+            Text(text = "Dificultat:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                 R.font.peachcake
             ))))
             myDropDownMenu(myViewModel)
         }
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Text(text = "Nombre de rondes:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+            Text(text = "Nombre de rondes:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                 R.font.peachcake
             ))))
             numberOfRounds(myViewModel)
@@ -83,16 +83,16 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
             timePerRound(myViewModel)
         }
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Text(text = "Mode fosc:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+            Text(text = "Mode fosc:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                 R.font.peachcake
             ))))
 
             Switch(checked = myViewModel.modeFosc,
                 onCheckedChange = { myViewModel.canviarMode(it) },
                 colors = SwitchDefaults.colors(
-                    uncheckedThumbColor = Color.White,
+                    uncheckedThumbColor = myViewModel.colorText,
                     checkedThumbColor = Color.Cyan,
-                    uncheckedTrackColor = Color.White,
+                    uncheckedTrackColor = myViewModel.colorText,
                     checkedTrackColor = colorBotons,
                 ))
         }
@@ -100,11 +100,11 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
             .width(130.dp)
             .clickable { (navController.navigate(Routes.MenuScreen.route)) }
             .background(Color.Transparent)
-            .border(2.dp, Color.White, shape = RoundedCornerShape(16.dp))
+            .border(2.dp, myViewModel.colorText, shape = RoundedCornerShape(16.dp))
             .height(60.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = "MENÚ", fontFamily = FontFamily(Font(R.font.peachcake)), style = TextStyle(color = Color.White, fontSize = 30.sp), modifier = Modifier.align(Alignment.Center))
+            Text(text = "MENÚ", fontFamily = FontFamily(Font(R.font.peachcake)), style = TextStyle(color = myViewModel.colorText, fontSize = 30.sp), modifier = Modifier.align(Alignment.Center))
         }
     }
 }
@@ -123,12 +123,12 @@ fun myDropDownMenu(myViewModel: MyViewModel) {
             onValueChange = { myViewModel.canviarDificultat(it) },
             enabled = false,
             readOnly = true,
-            textStyle = TextStyle(color = Color.White, fontFamily = FontFamily(Font(R.font.peachcake)), fontSize = 20.sp, textAlign = TextAlign.Center),
+            textStyle = TextStyle(color = myViewModel.colorText, fontFamily = FontFamily(Font(R.font.peachcake)), fontSize = 20.sp, textAlign = TextAlign.Center),
             modifier = Modifier
                 .clickable { expanded = true }
                 .width(120.dp)
                 .height(60.dp)
-                .border(2.dp, Color.White, shape = RoundedCornerShape(16.dp))
+                .border(2.dp, myViewModel.colorText, shape = RoundedCornerShape(16.dp))
                 .background(color = Color.Transparent)
                 .align(alignment = Alignment.CenterHorizontally)
         )
@@ -169,12 +169,12 @@ fun numberOfRounds(myViewModel: MyViewModel) {
                     onClick = { myViewModel.canviarRondes(text)},
                     colors = RadioButtonDefaults.colors(
                         selectedColor = Color.Cyan,
-                        unselectedColor = Color.White
+                        unselectedColor = myViewModel.colorText
                     )
                 )
                 Text(
                     text = "$text",
-                    style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                    style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                         R.font.peachcake
                     )))
                 )
@@ -192,7 +192,7 @@ fun timePerRound(myViewModel: MyViewModel) {
         modifier = Modifier.fillMaxWidth(0.7f)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Temps per ronda:", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+            Text(text = "Temps per ronda:", style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                 R.font.peachcake
             ))))
             Slider(
@@ -203,11 +203,11 @@ fun timePerRound(myViewModel: MyViewModel) {
                 colors = SliderDefaults.colors(
                     thumbColor = Color.Cyan,
                     activeTrackColor = Color.Cyan,
-                    inactiveTrackColor = Color.White
+                    inactiveTrackColor = myViewModel.colorText
                 )
             )
         }
-        Text(text = "${myViewModel.tempsPerRonda.toInt()} segons", style = TextStyle(color = Color.White,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+        Text(text = "${myViewModel.tempsPerRonda.toInt()} segons", style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
             R.font.peachcake
         ))))
 

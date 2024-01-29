@@ -35,7 +35,7 @@ fun MenuScreen(navController: NavController, myViewModel: MyViewModel) {
 
     Box (modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = myViewModel.fonsPantalla),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
@@ -53,11 +53,11 @@ fun MenuScreen(navController: NavController, myViewModel: MyViewModel) {
                 .width(130.dp)
                 .clickable { navController.navigate(Routes.GameScreen.route)}
                 .background(Color.Transparent)
-                .border(2.dp,Color.White, shape = RoundedCornerShape(16.dp))
+                .border(2.dp, myViewModel.colorText, shape = RoundedCornerShape(16.dp))
                 .height(60.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "PLAY", fontFamily = FontFamily(Font(R.font.peachcake)),  style = TextStyle(color = Color.White, fontSize = 30.sp))
+                Text(text = "PLAY", color = myViewModel.colorText, fontFamily = FontFamily(Font(R.font.peachcake)),  style = TextStyle(fontSize = 30.sp))
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -66,11 +66,11 @@ fun MenuScreen(navController: NavController, myViewModel: MyViewModel) {
                 .width(130.dp)
                 .clickable { (navController.navigate(Routes.Settings.route))}
                 .background(Color.Transparent)
-                .border(2.dp,Color.White, shape = RoundedCornerShape(16.dp))
+                .border(2.dp,myViewModel.colorText, shape = RoundedCornerShape(16.dp))
                 .height(60.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "HELP", fontFamily = FontFamily(Font(R.font.peachcake)), style = TextStyle(color = Color.White, fontSize = 30.sp), modifier = Modifier.align(Alignment.Center))
+                Text(text = "HELP",color = myViewModel.colorText, fontFamily = FontFamily(Font(R.font.peachcake)), style = TextStyle(fontSize = 30.sp), modifier = Modifier.align(Alignment.Center))
             }
         }
     }

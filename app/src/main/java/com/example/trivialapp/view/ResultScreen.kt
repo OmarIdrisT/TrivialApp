@@ -15,7 +15,7 @@ import com.example.trivialapp.viewmodel.MyViewModel
 @Composable
 fun ResultScreen(navController: NavController, myViewModel: MyViewModel) {
     Image(
-        painter = painterResource(id = R.drawable.fondo),
+        painter = painterResource(id = myViewModel.fonsPantalla),
         contentDescription = null,
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.FillBounds
