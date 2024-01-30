@@ -50,7 +50,6 @@ import com.example.trivialapp.navigation.Routes
 import com.example.trivialapp.viewmodel.MyViewModel
 
 
-val colorBotons = Color(0xffBB12F1)
 
 @Composable
 fun Settings(navController: NavController, myViewModel: MyViewModel) {
@@ -90,10 +89,10 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
             Switch(checked = myViewModel.modeFosc,
                 onCheckedChange = { myViewModel.canviarMode(it) },
                 colors = SwitchDefaults.colors(
-                    uncheckedThumbColor = myViewModel.colorText,
+                    uncheckedThumbColor = Color.Black,
                     checkedThumbColor = Color.Cyan,
-                    uncheckedTrackColor = myViewModel.colorText,
-                    checkedTrackColor = colorBotons,
+                    uncheckedTrackColor = Color.White,
+                    checkedTrackColor = Color.White,
                 ))
         }
         BoxWithConstraints(modifier = Modifier
@@ -168,7 +167,7 @@ fun numberOfRounds(myViewModel: MyViewModel) {
                     selected = (myViewModel.quantitatRondes == text),
                     onClick = { myViewModel.canviarRondes(text)},
                     colors = RadioButtonDefaults.colors(
-                        selectedColor = Color.Cyan,
+                        selectedColor = myViewModel.colorOpcions,
                         unselectedColor = myViewModel.colorText
                     )
                 )
@@ -201,8 +200,8 @@ fun timePerRound(myViewModel: MyViewModel) {
                 valueRange = 10f..30f,
                 steps = 3,
                 colors = SliderDefaults.colors(
-                    thumbColor = Color.Cyan,
-                    activeTrackColor = Color.Cyan,
+                    thumbColor = myViewModel.colorOpcions,
+                    activeTrackColor = myViewModel.colorOpcions,
                     inactiveTrackColor = myViewModel.colorText
                 )
             )

@@ -1,6 +1,7 @@
 package com.example.trivialapp.view
 
 import android.os.Handler
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,10 +13,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,9 +59,10 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         else -> trivial = questionariEasy
     }
 
-    trivial.shuffled()
+
 
     var numeroRonda by remember { mutableStateOf(1) }
+    var trivialRandom by remember { mutableStateOf(trivial.shuffled()) }
     var missatgeRondes = "Ronda $numeroRonda/${myViewModel.quantitatRondes}"
 
 
@@ -72,19 +78,36 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val seleccioQuiz = trivial[numeroRonda - 1]
-        val preguntaQuiz = seleccioQuiz.question
-        val respuestas = seleccioQuiz.answers.shuffled()
+        var seleccioQuiz = trivialRandom[numeroRonda - 1]
+        var preguntaQuiz = seleccioQuiz.question
+        var respuestas by remember { mutableStateOf(seleccioQuiz.answers.shuffled()) }
+        var botoClicat by remember { mutableStateOf(false) }
 
-        Text(text = missatgeRondes, style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
-        Text(text = preguntaQuiz, style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+        Text(
+            text = missatgeRondes,
+            style = TextStyle(
+                color = myViewModel.colorText,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(Font(R.font.peachcake))
+            )
+        )
+        Text(
+            text = preguntaQuiz,
+            style = TextStyle(
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(Font(R.font.peachcake))
+            )
+        )
         Image(
             painter = painterResource(id = seleccioQuiz.image),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth(0.6f)
-                .fillMaxHeight(0.3f))
-        repeat(2) {row ->
+                .fillMaxHeight(0.3f)
+        )
+        repeat(2) { row ->
             Row(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
@@ -93,43 +116,66 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                 repeat(2) { column ->
                     val index = row * 2 + column
                     val respuesta = respuestas[index]
-                    var colorResposta by remember { mutableStateOf(Color.Transparent) }
+                    var colorResposta by remember { mutableStateOf(myViewModel.colorText) }
+                    var botoEnabled by remember { mutableStateOf(true) }
+                    botoEnabled = !botoClicat
                     OutlinedButton(
                         onClick = {
+                            botoClicat = true
                             if (respuesta == seleccioQuiz.correctAnswer) {
-                                score++
+                                myViewModel.incrementarScore()
                                 colorResposta = Color.Green
 
-                            }
-                            else {
+                            } else {
                                 colorResposta = Color.Red
                             }
+
                             CoroutineScope(Dispatchers.Main).launch {
                                 delay(1000)
 
-                                // Realizar acciones adicionales después del retraso
-                                colorResposta = Color.Transparent
+                                colorResposta = myViewModel.colorText
                                 if (numeroRonda < myViewModel.quantitatRondes) {
                                     numeroRonda++
+                                    seleccioQuiz = trivialRandom[numeroRonda - 1]
+                                    preguntaQuiz = seleccioQuiz.question
+                                    respuestas = seleccioQuiz.answers.shuffled()
+                                    botoClicat = false
                                 } else {
                                     navController.navigate(Routes.ResultScreen.route)
                                 }
                             }
                         },
                         modifier = Modifier
-                            .height(100.dp)
-                            .width(150.dp)
-                            .background(colorResposta)
+                            .fillMaxWidth(0.4f)
+                            .fillMaxHeight(0.4f)
+                            .weight(1f),
+                        border = BorderStroke(2.dp, colorResposta),
+                        enabled = botoEnabled
+
                     ) {
-                        Text(text = respuesta, style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+                        Text(
+                            text = respuesta,
+                            style = TextStyle(
+                                color = myViewModel.colorText,
+                                fontSize = 20.sp,
+                                textAlign = TextAlign.Center,
+                                fontFamily = FontFamily(Font(R.font.peachcake))
+                            )
+                        )
                     }
                 }
             }
         }
+        var tempsTranscorregut = System.currentTimeMillis()
+        val progress = (myViewModel.tempsPerRonda - tempsTranscorregut) / myViewModel.tempsPerRonda
+        LinearProgressIndicator(
+            color = myViewModel.colorText,
+            trackColor = myViewModel.colorText,
+            progress = progress.coerceIn(0f,1f)
 
-        Text(text ="Score: $score" , style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
-
+        )
     }
+
 }
 
 

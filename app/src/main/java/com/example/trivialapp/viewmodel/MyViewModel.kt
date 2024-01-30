@@ -49,13 +49,23 @@ class MyViewModel: ViewModel() {
         else {
             Color.Black
         }
+
+        colorOpcions = if(modeFosc) {
+            Color.Cyan
+        }
+        else {
+            Color.Black
+        }
     }
 
     var score : Int by mutableStateOf(0)
         private set
 
-    fun incrementarScore (valor:Int) {
-        score = valor
+    fun incrementarScore() {
+        score++
+    }
+    fun reiniciarScore() {
+        score = 0
     }
 
     var fonsPantalla = if(modeFosc) {
@@ -72,19 +82,16 @@ class MyViewModel: ViewModel() {
         Color.Black
     }
 
+    var colorOpcions = if(modeFosc) {
+        Color.Cyan
+    }
+    else {
+        Color.Black
+    }
+
 }
 
 val questionariEasy = mutableListOf(
-    PreguntasYRespuestas.quiz(
-        "¿Cuál fue el detonante de la Primera Guerra Mundial?",
-        mutableListOf(
-            "El asesinato del archiduque Francisco Fernando de Habsburgo.",
-            "La firma del Tratado de Versalles.",
-            "El hundimiento del Titanic.",
-            "La Revolución Rusa."),
-        "El asesinato del archiduque Francisco Fernando de Habsburgo.",
-        R.drawable.oceano
-    ),
     PreguntasYRespuestas.quiz(
         "¿Quién fue el primer presidente de Estados Unidos?",
         mutableListOf(
@@ -132,17 +139,6 @@ val questionariEasy = mutableListOf(
             "Venecia, Italia.",
             "Pisa, Italia."),
         "Pisa, Italia.",
-        R.drawable.oceano
-    ),
-    PreguntasYRespuestas.quiz(
-        "¿Cuál es el océano más grande del mundo?",
-        mutableListOf(
-            "Océano Atlántico.",
-            "Océano Índico.",
-            "Océano Pacífico.",
-            "Océano Ártico."),
-
-        "Océano Pacífico.",
         R.drawable.oceano
     ),
     PreguntasYRespuestas.quiz(
