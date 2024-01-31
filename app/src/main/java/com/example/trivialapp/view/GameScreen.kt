@@ -1,5 +1,6 @@
 package com.example.trivialapp.view
 
+import android.content.Intent
 import android.os.Handler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -8,11 +9,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
@@ -24,11 +27,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -36,6 +41,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import com.example.trivialapp.R
 import com.example.trivialapp.model.PreguntasYRespuestas
@@ -50,8 +56,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
 
-    var trivial by remember {mutableStateOf(mutableListOf<PreguntasYRespuestas.quiz>())  }
-    var score by remember { mutableStateOf(myViewModel.score) }
+    var trivial by remember {mutableStateOf(mutableListOf<PreguntasYRespuestas.quiz>()) }
+    var timeIsRunning by rememberSaveable { mutableStateOf(true) }
 
     when(myViewModel.dificultatEscollida) {
         "FACIL" -> trivial = questionariEasy
@@ -74,7 +80,9 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         contentScale = ContentScale.FillBounds
     )
     Column(
-        modifier = Modifier.fillMaxSize(0.5f),
+        modifier = Modifier
+            .fillMaxHeight(0.7f)
+            .fillMaxWidth(0.7f),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -82,6 +90,7 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         var preguntaQuiz = seleccioQuiz.question
         var respuestas by remember { mutableStateOf(seleccioQuiz.answers.shuffled()) }
         var botoClicat by remember { mutableStateOf(false) }
+        var timeLeft by rememberSaveable { mutableStateOf(myViewModel.tempsPerRonda) }
 
         Text(
             text = missatgeRondes,
@@ -110,7 +119,11 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         repeat(2) { row ->
             Row(
                 horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .fillMaxHeight(0.4f)
+                    .border(1.dp, myViewModel.colorText)
             ) {
 
                 repeat(2) { column ->
@@ -122,6 +135,7 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                     OutlinedButton(
                         onClick = {
                             botoClicat = true
+                            timeIsRunning = false
                             if (respuesta == seleccioQuiz.correctAnswer) {
                                 myViewModel.incrementarScore()
                                 colorResposta = Color.Green
@@ -140,9 +154,13 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                                     preguntaQuiz = seleccioQuiz.question
                                     respuestas = seleccioQuiz.answers.shuffled()
                                     botoClicat = false
+                                    timeLeft = myViewModel.tempsPerRonda
+                                    timeIsRunning = true
+
                                 } else {
                                     navController.navigate(Routes.ResultScreen.route)
                                 }
+
                             }
                         },
                         modifier = Modifier
@@ -166,17 +184,39 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                 }
             }
         }
-        var tempsTranscorregut = System.currentTimeMillis()
-        val progress = (myViewModel.tempsPerRonda - tempsTranscorregut) / myViewModel.tempsPerRonda
-        LinearProgressIndicator(
-            color = myViewModel.colorText,
-            trackColor = myViewModel.colorText,
-            progress = progress.coerceIn(0f,1f)
 
-        )
+        LaunchedEffect(timeLeft) {
+            while (timeLeft > 0 && timeIsRunning) {
+                delay(1000L)
+                timeLeft--
+            }
+            if (timeLeft.toInt() == 0) {
+                numeroRonda++
+                seleccioQuiz = trivialRandom[numeroRonda - 1]
+                preguntaQuiz = seleccioQuiz.question
+                respuestas = seleccioQuiz.answers.shuffled()
+                timeLeft = myViewModel.tempsPerRonda
+                timeIsRunning = true
+            }
+        }
+        Column(Modifier.fillMaxWidth(0.7f), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "Tiempo restante: $timeLeft s",
+                style = TextStyle(
+                color = myViewModel.colorText,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(Font(R.font.peachcake))
+            ))
+            LinearProgressIndicator(progress = timeLeft / myViewModel.tempsPerRonda, color = myViewModel.colorText, modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.04f))
+        }
     }
-
 }
+
+
+
 
 
 

@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -47,28 +49,27 @@ fun MenuScreen(navController: NavController, myViewModel: MyViewModel) {
             verticalArrangement = Arrangement.Center
         ) {
             Image(painter = painterResource(id = R.drawable.logo), contentDescription = "portada", modifier = Modifier.size(200.dp))
-            Spacer(modifier = Modifier.height(30.dp))
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.fillMaxHeight(0.2f))
             Box(modifier = Modifier
-                .width(130.dp)
+                .fillMaxWidth(0.275f)
                 .clickable { navController.navigate(Routes.GameScreen.route)
                              myViewModel.reiniciarScore()}
                 .background(Color.Transparent)
                 .border(2.dp, myViewModel.colorText, shape = RoundedCornerShape(16.dp))
-                .height(60.dp),
+                .fillMaxHeight(0.175f),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "PLAY", color = myViewModel.colorText, fontFamily = FontFamily(Font(R.font.peachcake)),  style = TextStyle(fontSize = 30.sp))
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
             Box(modifier = Modifier
-                .width(130.dp)
+                .fillMaxWidth(0.275f)
                 .clickable { (navController.navigate(Routes.Settings.route))}
                 .background(Color.Transparent)
                 .border(2.dp,myViewModel.colorText, shape = RoundedCornerShape(16.dp))
-                .height(60.dp),
+                .fillMaxHeight(0.175f),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "HELP",color = myViewModel.colorText, fontFamily = FontFamily(Font(R.font.peachcake)), style = TextStyle(fontSize = 30.sp), modifier = Modifier.align(Alignment.Center))
