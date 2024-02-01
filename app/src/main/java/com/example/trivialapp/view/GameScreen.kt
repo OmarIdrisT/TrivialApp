@@ -1,28 +1,18 @@
 package com.example.trivialapp.view
 
-import android.content.Intent
-import android.os.Handler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -41,7 +30,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import com.example.trivialapp.R
 import com.example.trivialapp.model.PreguntasYRespuestas
@@ -121,8 +109,7 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .fillMaxHeight(0.4f)
+                    .fillMaxWidth()
                     .border(1.dp, myViewModel.colorText)
             ) {
 
@@ -164,9 +151,9 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                             }
                         },
                         modifier = Modifier
-                            .fillMaxWidth(0.4f)
-                            .fillMaxHeight(0.4f)
-                            .weight(1f),
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .weight(0.4f),
                         border = BorderStroke(2.dp, colorResposta),
                         enabled = botoEnabled
 

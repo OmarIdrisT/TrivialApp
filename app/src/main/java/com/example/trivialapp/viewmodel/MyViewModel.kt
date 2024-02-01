@@ -95,81 +95,81 @@ val questionariEasy = mutableListOf(
     PreguntasYRespuestas.quiz(
         "¿Quién fue el primer presidente de Estados Unidos?",
         mutableListOf(
-            "George Washington.",
-            "Abraham Lincoln.",
-            "Thomas Jefferson.",
-            "Benjamin Franklin."),
-        "George Washington.",
-        R.drawable.oceano
+            "George Washington",
+            "Abraham Lincoln",
+            "Thomas Jefferson",
+            "Benjamin Franklin"),
+        "George Washington",
+        R.drawable.usa
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué año se disolvió la Unión Soviética?",
         mutableListOf(
-            "1989.",
-            "1991.",
-            "1993.",
-            "1995."),
-        "1991.",
-        R.drawable.oceano
+            "1989",
+            "1991",
+            "1993",
+            "1995"),
+        "1991",
+        R.drawable.urss
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el idioma más hablado en Suiza?",
         mutableListOf(
-            "Alemán.",
-            "Francés.",
-            "Italiano.",
-            "Rumano."),
-        "Alemán.",
-        R.drawable.oceano
+            "Alemán",
+            "Francés",
+            "Italiano",
+            "Rumano"),
+        "Alemán",
+        R.drawable.suiza
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué disciplina deportiva juega Leo Messi?",
-        mutableListOf("Fútbol.",
-            "Tenis.",
-            "Baloncesto.",
-            "Golf."),
-        "Fútbol.",
-        R.drawable.oceano
+        mutableListOf("Fútbol",
+            "Tenis",
+            "Baloncesto",
+            "Golf"),
+        "Fútbol",
+        R.drawable.messi
     ),
     PreguntasYRespuestas.quiz(
         "¿Dónde se encuentra la Torre de Pisa?",
         mutableListOf(
-            "Roma, Italia.",
-            "Florencia, Italia.",
-            "Venecia, Italia.",
-            "Pisa, Italia."),
-        "Pisa, Italia.",
-        R.drawable.oceano
+            "Roma, Italia",
+            "Florencia, Italia",
+            "Venecia, Italia",
+            "Pisa, Italia"),
+        "Pisa, Italia",
+        R.drawable.pisa
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es la capital de Indonesia?",
         mutableListOf(
-            "Yakarta.",
-            "Bangkok.",
-            "Kuala Lumpur.",
-            "Manila."),
-        "Yakarta.",
-        R.drawable.oceano
+            "Yakarta",
+            "Bangkok",
+            "Kuala Lumpur",
+            "Manila"),
+        "Yakarta",
+        R.drawable.indonesia
     ),
     PreguntasYRespuestas.quiz(
         "¿Quiénes son los protagonistas de la película 'Pretty Woman'?",
         mutableListOf(
-            "Julia Roberts y Richard Gere.",
-            "Sandra Bullock y Tom Hanks.",
-            "Jennifer Aniston y Brad Pitt.",
-            "Angelina Jolie y Johnny Depp."),
-        "Julia Roberts y Richard Gere.",
-        R.drawable.oceano
+            "Julia Roberts y Richard Gere",
+            "Sandra Bullock y Tom Hanks",
+            "Jennifer Aniston y Brad Pitt",
+            "Angelina Jolie y Johnny Depp"),
+        "Julia Roberts y Richard Gere",
+        R.drawable.prettywoman
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el río más largo de Europa Occidental?",
         mutableListOf(
-            "Río Támesis.",
-            "Río Rin.",
-            "Río Sena.",
-            "Río Danubio."),
-        "Río Rin.",
-        R.drawable.oceano
+            "Río Támesis",
+            "Río Rin",
+            "Río Sena",
+            "Río Danubio"),
+        "Río Rin",
+        R.drawable.rio
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es la capital de Francia?",
@@ -179,7 +179,7 @@ val questionariEasy = mutableListOf(
             "Madrid",
             "Berlín"),
         "París",
-        R.drawable.oceano
+        R.drawable.francia
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué año comenzó la Segunda Guerra Mundial?",
@@ -189,7 +189,7 @@ val questionariEasy = mutableListOf(
             "1945",
             "1941"),
         "1939",
-        R.drawable.oceano
+        R.drawable.segundaguerramundial
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién escribió la obra de Romeo y Julieta?",
@@ -199,7 +199,7 @@ val questionariEasy = mutableListOf(
             "Charles Dickens",
             "Jane Austen"),
         "William Shakespeare",
-        R.drawable.oceano
+        R.drawable.romeoyjulieta
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el océano más grande del mundo?",
@@ -219,7 +219,7 @@ val questionariEasy = mutableListOf(
             "Estados Unidos",
             "China"),
         "Rusia",
-        R.drawable.oceano
+        R.drawable.tierra
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el animal terrestre más grande?",
@@ -229,7 +229,7 @@ val questionariEasy = mutableListOf(
             "Rinoceronte blanco",
             "Hipopótamo"),
         "Elefante africano",
-        R.drawable.oceano
+        R.drawable.jirafa
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es la montaña más alta del mundo?",
@@ -239,7 +239,7 @@ val questionariEasy = mutableListOf(
             "Monte McKinley",
             "Monte Aconcagua"),
         "Monte Everest",
-        R.drawable.oceano
+        R.drawable.kilimanjaro
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es el idioma más hablado en el mundo?",
@@ -249,7 +249,7 @@ val questionariEasy = mutableListOf(
             "Español",
             "Hindi"),
         "Chino mandarín",
-        R.drawable.oceano
+        R.drawable.idiomas
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué país se encuentra la Torre Eiffel?",
@@ -259,7 +259,7 @@ val questionariEasy = mutableListOf(
             "Francia",
             "Alemania"),
         "Francia",
-        R.drawable.oceano
+        R.drawable.eiffel
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién pintó La Mona Lisa?",
@@ -269,6 +269,16 @@ val questionariEasy = mutableListOf(
             "Pablo Picasso",
             "Michelangelo"),
         "Leonardo da Vinci",
-        R.drawable.oceano
+        R.drawable.monalisa
+    ),
+    PreguntasYRespuestas.quiz(
+        "¿En qué año se descubrió América?",
+        mutableListOf(
+            "1492",
+            "1942",
+            "1462",
+            "1789"),
+        "1492",
+        R.drawable.colon
     )
 )
