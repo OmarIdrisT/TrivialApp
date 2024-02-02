@@ -4,6 +4,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.lifecycle.ViewModel
 import com.example.trivialapp.R
 import com.example.trivialapp.model.PreguntasYRespuestas
@@ -90,6 +93,8 @@ class MyViewModel: ViewModel() {
     }
 
 }
+
+
 
 val questionariEasy = mutableListOf(
     PreguntasYRespuestas.quiz(

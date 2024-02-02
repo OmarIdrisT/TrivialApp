@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -57,7 +59,9 @@ fun ResultScreen(navController: NavController, myViewModel: MyViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "${myViewModel.score}/${myViewModel.quantitatRondes}", style = TextStyle(color = myViewModel.colorText,fontSize = 50.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+        Spacer(modifier = Modifier.fillMaxHeight(0.1f))
         Text(text = "DIFICULTAD: ${myViewModel.dificultatEscollida}", style = TextStyle(color = myViewModel.colorText,fontSize = 40.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+        Spacer(modifier = Modifier.fillMaxHeight(0.1f))
         Box(modifier = Modifier
             .width(130.dp)
             .clickable {navController.navigate(Routes.MenuScreen.route)}
@@ -68,6 +72,7 @@ fun ResultScreen(navController: NavController, myViewModel: MyViewModel) {
         ) {
             Text(text = "MENU",color = myViewModel.colorText, fontFamily = FontFamily(Font(R.font.peachcake)), style = TextStyle(fontSize = 30.sp), modifier = Modifier.align(Alignment.Center))
         }
+        Spacer(modifier = Modifier.fillMaxHeight(0.1f))
         Box(modifier = Modifier
             .width(130.dp)
             .clickable {navController.navigate(Routes.MenuScreen.route)}
