@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -60,51 +61,62 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.FillBounds
     )
-    Column (
+    LazyColumn (
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(text = "Dificultat:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
-                R.font.peachcake
-            ))))
+        item {
+            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Text(text = "Dificultat:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
             myDropDownMenu(myViewModel)
+            }
         }
-        Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Text(text = "Nombre de rondes:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
-                R.font.peachcake
-            ))))
-            numberOfRounds(myViewModel)
-        }
-        Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            timePerRound(myViewModel)
-        }
-        Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Text(text = "Mode fosc:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
-                R.font.peachcake
-            ))))
 
-            Switch(checked = myViewModel.modeFosc,
-                onCheckedChange = { myViewModel.canviarMode(it) },
-                colors = SwitchDefaults.colors(
-                    uncheckedThumbColor = Color.Black,
-                    checkedThumbColor = Color.Cyan,
-                    uncheckedTrackColor = Color.White,
-                    checkedTrackColor = Color.White,
-                ))
+        item {
+            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Text(text = "Nombre de rondes:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                    R.font.peachcake
+                ))))
+                numberOfRounds(myViewModel)
+            }
         }
-        BoxWithConstraints(modifier = Modifier
-            .width(130.dp)
-            .clickable { (navController.navigate(Routes.MenuScreen.route)) }
-            .background(Color.Transparent)
-            .border(2.dp, myViewModel.colorText, shape = RoundedCornerShape(16.dp))
-            .height(60.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "MENÚ", fontFamily = FontFamily(Font(R.font.peachcake)), style = TextStyle(color = myViewModel.colorText, fontSize = 30.sp), modifier = Modifier.align(Alignment.Center))
+        item {
+            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                timePerRound(myViewModel)
+            }
         }
+
+        item {
+            Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Text(text = "Mode fosc:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                    R.font.peachcake
+                ))))
+
+                Switch(checked = myViewModel.modeFosc,
+                    onCheckedChange = { myViewModel.canviarMode(it) },
+                    colors = SwitchDefaults.colors(
+                        uncheckedThumbColor = Color.Black,
+                        checkedThumbColor = Color.Cyan,
+                        uncheckedTrackColor = Color.White,
+                        checkedTrackColor = Color.White,
+                    ))
+            }
+        }
+        item {
+            BoxWithConstraints(modifier = Modifier
+                .width(130.dp)
+                .clickable { (navController.navigate(Routes.MenuScreen.route)) }
+                .background(Color.Transparent)
+                .border(2.dp, myViewModel.colorText, shape = RoundedCornerShape(16.dp))
+                .height(60.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "MENÚ", fontFamily = FontFamily(Font(R.font.peachcake)), style = TextStyle(color = myViewModel.colorText, fontSize = 30.sp), modifier = Modifier.align(Alignment.Center))
+            }
+        }
+
     }
 }
 
