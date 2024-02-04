@@ -126,7 +126,7 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
 @Composable
 fun myDropDownMenu(myViewModel: MyViewModel) {
     var expanded by remember { mutableStateOf(false) }
-    val opcions = listOf("FACIL", "NORMAL", "DIFICIL")
+    val opcions = listOf("FÁCIL", "NORMAL", "DIFÍCIL")
 
     Column (modifier = Modifier.padding(20.dp)) {
         OutlinedTextField(
@@ -148,12 +148,12 @@ fun myDropDownMenu(myViewModel: MyViewModel) {
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
-            opcions.forEach { dificultat ->
-                DropdownMenuItem(modifier = Modifier.background(color = Color.Black) ,text = { Text(text = dificultat, style = TextStyle(color = Color.White, fontFamily = FontFamily(Font(
+            opcions.forEach { dificultad ->
+                DropdownMenuItem(modifier = Modifier.background(color = Color.Black) ,text = { Text(text = dificultad, style = TextStyle(color = Color.White, fontFamily = FontFamily(Font(
                     R.font.peachcake
                 )))) }, onClick = {
                     expanded = false
-                    myViewModel.canviarDificultat(dificultat)
+                    myViewModel.canviarDificultat(dificultad)
                 })
             }
         }

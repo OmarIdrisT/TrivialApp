@@ -3,7 +3,6 @@ package com.example.trivialapp.view
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,7 +37,8 @@ import com.example.trivialapp.R
 import com.example.trivialapp.model.PreguntasYRespuestas
 import com.example.trivialapp.navigation.Routes
 import com.example.trivialapp.viewmodel.MyViewModel
-import com.example.trivialapp.viewmodel.questionariEasy
+import com.example.trivialapp.viewmodel.questionariDificil
+import com.example.trivialapp.viewmodel.questionariFacil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -65,9 +64,9 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
     var timeIsRunning by rememberSaveable { mutableStateOf(true) }
 
     when (myViewModel.dificultatEscollida) {
-        "FACIL" -> trivial = questionariEasy
-        "NORMAL" -> trivial = questionariEasy
-        else -> trivial = questionariEasy
+        "FÁCIL" -> trivial = questionariFacil
+        "NORMAL" -> trivial = questionariFacil
+        else -> trivial = questionariDificil
     }
 
 
