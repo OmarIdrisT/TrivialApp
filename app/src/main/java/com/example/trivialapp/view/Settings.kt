@@ -69,14 +69,14 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
     ) {
         item {
             Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                Text(text = "Dificultat:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+                Text(text = "Dificultad:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
             myDropDownMenu(myViewModel)
             }
         }
 
         item {
             Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                Text(text = "Nombre de rondes:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                Text(text = "Número de rondas:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                     R.font.peachcake
                 ))))
                 numberOfRounds(myViewModel)
@@ -90,7 +90,7 @@ fun Settings(navController: NavController, myViewModel: MyViewModel) {
 
         item {
             Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                Text(text = "Mode fosc:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+                Text(text = "Modo oscuro:", style = TextStyle(color = myViewModel.colorText, fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                     R.font.peachcake
                 ))))
 
@@ -203,7 +203,7 @@ fun timePerRound(myViewModel: MyViewModel) {
         modifier = Modifier.fillMaxWidth(0.7f)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Temps per ronda:", style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+            Text(text = "Tiempo por ronda:", style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
                 R.font.peachcake
             ))))
             Slider(
@@ -218,7 +218,7 @@ fun timePerRound(myViewModel: MyViewModel) {
                 )
             )
         }
-        Text(text = "${myViewModel.tempsPerRonda.toInt()} segons", style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
+        Text(text = "${myViewModel.tempsPerRonda.toInt()} segundos", style = TextStyle(color = myViewModel.colorText,fontSize = 20.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(
             R.font.peachcake
         ))))
 
