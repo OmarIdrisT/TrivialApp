@@ -303,7 +303,7 @@ val questionariNormal = mutableListOf(
             "Alfred Russel Wallace",
             "Jean-Baptiste Lamarck"),
         "Charles Darwin",
-        R.drawable.facil_usa
+        R.drawable.normal_evolucion
     ),
     PreguntasYRespuestas.quiz(
         "¿De qué país es esta bandera?",
@@ -313,7 +313,7 @@ val questionariNormal = mutableListOf(
             "San Marino",
             "Kenia"),
         "Bután",
-        R.drawable.facil_urss
+        R.drawable.normal_butan
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién descubrió la penicilina?",
@@ -323,16 +323,17 @@ val questionariNormal = mutableListOf(
             "Marie Curie",
             "Alexander Fleming"),
         "Alexander Fleming",
-        R.drawable.facil_suiza
+        R.drawable.normal_penicilina
     ),
     PreguntasYRespuestas.quiz(
-        "¿En qué disciplina deportiva juega Leo Messi?",
-        mutableListOf("Fútbol",
-            "Tenis",
-            "Baloncesto",
-            "Golf"),
-        "Fútbol",
-        R.drawable.facil_messi
+        "¿Qué elemento ocupa la posición 117 de la Tabla Periódica?",
+        mutableListOf(
+            "Teneso (Ts)",
+            "Oganesón (Og)",
+            "Darmstatio (Ds)",
+            "Einstenio (Es)"),
+        "Teneso (Ts)",
+        R.drawable.normal_tablaperiodica
     ),
     PreguntasYRespuestas.quiz(
         "¿Qué juego se llevó el GOTY del año 2011?",
@@ -342,7 +343,7 @@ val questionariNormal = mutableListOf(
             "Portal 2",
             "Uncharted 3: Drake's Deception"),
         "The Elder Scrolls V: Skyrim",
-        R.drawable.facil_pisa
+        R.drawable.normal_goty
     ),
     PreguntasYRespuestas.quiz(
         "¿Cuál es la fórmula del ácido acético?",
@@ -352,7 +353,7 @@ val questionariNormal = mutableListOf(
             "CH2OH",
             "CH3NH2"),
         "CH3COOH",
-        R.drawable.facil_indonesia
+        R.drawable.normal_acidoacetico
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién escribió 'Crimen y Castigo'?",
@@ -362,7 +363,7 @@ val questionariNormal = mutableListOf(
             "Franz Kafka",
             "Nikolai Gógol"),
         "Fiódor Dostoievski",
-        R.drawable.facil_prettywoman
+        R.drawable.normal_crimenycastigo
     ),
     PreguntasYRespuestas.quiz(
         "¿En qué año se firmó la Declaración de Independencia de los Estados Unidos?",
@@ -372,7 +373,7 @@ val questionariNormal = mutableListOf(
             "1804",
             "1812"),
         "1776",
-        R.drawable.facil_rio
+        R.drawable.normal_eeuu
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién escribió 'Berserk'?",
@@ -382,7 +383,7 @@ val questionariNormal = mutableListOf(
             "Stephen King",
             "H. P. Lovecraft"),
         "Kentaro Miura",
-        R.drawable.facil_francia
+        R.drawable.normal_berserk
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién compuso 'Las cuatro estaciones'?",
@@ -392,7 +393,7 @@ val questionariNormal = mutableListOf(
             "Frédéric Chopin",
             "Ludwig van Beethoven"),
         "Antonio Vivaldi",
-        R.drawable.facil_segundaguerra
+        R.drawable.normal_cuatroestaciones
     ),
     PreguntasYRespuestas.quiz(
         "¿En la mitología irlandesa, quién portaba la lanza Gáe Bolg?",
@@ -402,17 +403,17 @@ val questionariNormal = mutableListOf(
             "Lugaid",
             "Diarmuid Ua Duibhne"),
         "Cú Chulainn",
-        R.drawable.facil_romeoyjulieta
+        R.drawable.normal_gaebolg
     ),
     PreguntasYRespuestas.quiz(
-        "¿Cuál de estos libros de Lovecraft se publicó antes?",
+        "¿Cuál de estas obras de Lovecraft se publicó antes?",
         mutableListOf(
             "Dagón",
             "Azathoth",
             "Nyarlathotep",
             "La llamada de Cthulhu"),
         "Dagón",
-        R.drawable.facil_oceano
+        R.drawable.normal_lovecraft
     ),
     PreguntasYRespuestas.quiz(
         "¿Cómo se llama este personaje?",
@@ -422,7 +423,7 @@ val questionariNormal = mutableListOf(
             "Eddy",
             "Dexter"),
         "Ed",
-        R.drawable.facil_tierra
+        R.drawable.normal_ed
     ),
     PreguntasYRespuestas.quiz(
         "¿Quién ha vendido más discos?",
@@ -432,66 +433,66 @@ val questionariNormal = mutableListOf(
             "Elvis Presley",
             "Led Zeppelin"),
         "The Beatles",
-        R.drawable.facil_jirafa
+        R.drawable.normal_discos
     ),
     PreguntasYRespuestas.quiz(
-        "¿Cómo se ",
+        "¿Cuál es la fórmula matemática del teorema de Pitágoras?",
         mutableListOf(
-            "Monte Everest",
-            "Monte Kilimanjaro",
-            "Monte McKinley",
-            "Monte Aconcagua"),
-        "Monte Everest",
-        R.drawable.facil_kilimanjaro
+            "a^2 + b^2 = c^2",
+            "a^2 - b^2 = c^2",
+            "a + b + c = 0",
+            "(a + b)^2 = c^2"),
+        "a^2 + b^2 = c^2",
+        R.drawable.normal_pitagoras
     ),
     PreguntasYRespuestas.quiz(
-        "¿Cuál es el idioma más hablado en el mundo?",
+        "¿Cuál es la capital de Australia?",
         mutableListOf(
-            "Inglés",
-            "Chino mandarín",
-            "Español",
-            "Hindi"),
-        "Chino mandarín",
-        R.drawable.facil_idiomas
+            "Canberra",
+            "Sídney",
+            "Melbourne",
+            "Brisbane"),
+        "Canberra",
+        R.drawable.normal_australia
     ),
     PreguntasYRespuestas.quiz(
-        "¿En qué país se encuentra la Torre Eiffel?",
+        "¿Cuál es el país con la mayor población musulmana del mundo?",
         mutableListOf(
-            "España",
-            "Italia",
-            "Francia",
-            "Alemania"),
-        "Francia",
-        R.drawable.facil_eiffel
+            "Indonesia",
+            "Pakistán",
+            "Arabia Saudita",
+            "Irán "),
+        "Indonesia",
+        R.drawable.normal_musulman
     ),
     PreguntasYRespuestas.quiz(
-        "¿Quién pintó La Mona Lisa?",
+        "¿Cuál es el autor de la famosa obra '1984'?",
         mutableListOf(
-            "Vincent van Gogh",
-            "Leonardo da Vinci",
-            "Pablo Picasso",
-            "Michelangelo"),
-        "Leonardo da Vinci",
-        R.drawable.facil_monalisa
+            "George Orwell",
+            "Aldous Huxley",
+            "Ray Bradbury",
+            "J.R.R. Tolkien"),
+        "George Orwell",
+        R.drawable.normal_1984
     ),
     PreguntasYRespuestas.quiz(
-        "¿En qué año se descubrió América?",
+        "¿Cuál de estos procesos es característico de la fotosíntesis?",
         mutableListOf(
-            "1492",
-            "1942",
-            "1462",
-            "1789"),
-        "1492",
-        R.drawable.facil_colon
+            "Ciclo de Krebs",
+            "Ciclo de Calvin",
+            "Ciclo de la luz",
+            "Ciclo de la urea"),
+        "Ciclo de Calvin",
+        R.drawable.normal_fotosintesis
     ),
     PreguntasYRespuestas.quiz(
-        "¿Qué valor tiene la raíz cuadrada de 196?",
+        "¿Qué cambio corresponde a una sublimación?",
         mutableListOf(
-            "15",
-            "17",
-            "16",
-            "14"),
-        "14",R.drawable.facil_raiz
+            "Sólido -> Gaseoso",
+            "Gaseoso -> Líquido",
+            "Gaseoso -> Plasmático",
+            "Líquido -> Gaseoso"),
+        "Sólido -> Gaseoso",R.drawable.normal_estadosmateria
     )
 )
 

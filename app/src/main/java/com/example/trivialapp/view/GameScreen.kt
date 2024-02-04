@@ -6,10 +6,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -39,6 +41,7 @@ import com.example.trivialapp.navigation.Routes
 import com.example.trivialapp.viewmodel.MyViewModel
 import com.example.trivialapp.viewmodel.questionariDificil
 import com.example.trivialapp.viewmodel.questionariFacil
+import com.example.trivialapp.viewmodel.questionariNormal
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -48,7 +51,7 @@ import kotlinx.coroutines.launch
 fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
 
     val configuration = LocalConfiguration.current
-    var landscape = false
+    var landscape: Boolean
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             landscape = true
@@ -65,7 +68,7 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
 
     when (myViewModel.dificultatEscollida) {
         "FÁCIL" -> trivial = questionariFacil
-        "NORMAL" -> trivial = questionariFacil
+        "NORMAL" -> trivial = questionariNormal
         else -> trivial = questionariDificil
     }
 
@@ -187,7 +190,7 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
         }
         else {
             Row(
-                horizontalArrangement = Arrangement.SpaceAround,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
@@ -231,8 +234,9 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(0.4f)
-                            .weight(0.4f),
+                            .fillMaxHeight(0.5f)
+                            .weight(0.4f)
+                            .padding(end = 4.dp),
                         border = BorderStroke(2.dp, colorResposta),
                         enabled = botoEnabled
 
@@ -256,6 +260,9 @@ fun GameScreen(navController: NavController, myViewModel: MyViewModel) {
             while (timeLeft > 0 && timeIsRunning) {
                 delay(100L)
                 timeLeft -= 0.1f
+            }
+            if (!timeIsRunning) {
+                timeLeft -= 0
             }
             if (timeLeft.toInt() == 0) {
                 if (numeroRonda < myViewModel.quantitatRondes) {

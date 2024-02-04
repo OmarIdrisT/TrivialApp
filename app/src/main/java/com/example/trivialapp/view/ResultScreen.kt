@@ -54,11 +54,11 @@ fun ResultScreen(navController: NavController, myViewModel: MyViewModel) {
         contentScale = ContentScale.FillBounds
     )
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxHeight().fillMaxWidth(0.9f),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "${myViewModel.score}/${myViewModel.quantitatRondes}", style = TextStyle(color = myViewModel.colorText,fontSize = 50.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
+        Text(text = "¡Has acertado ${myViewModel.score}/${myViewModel.quantitatRondes} preguntas!", style = TextStyle(color = myViewModel.colorText,fontSize = 50.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
         Text(text = "DIFICULTAD: ${myViewModel.dificultatEscollida}", style = TextStyle(color = myViewModel.colorText,fontSize = 40.sp, textAlign = TextAlign.Center, fontFamily = FontFamily(Font(R.font.peachcake))))
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
@@ -80,7 +80,7 @@ fun ResultScreen(navController: NavController, myViewModel: MyViewModel) {
             .border(2.dp,myViewModel.colorText, shape = RoundedCornerShape(16.dp))
             .height(60.dp),
             contentAlignment = Alignment.Center) {
-            Share("SHARE", myViewModel)
+            Share("¡Esta es mi puntuación en TrivialApp: ${myViewModel.score}/${myViewModel.quantitatRondes}!", myViewModel)
         }
     }
 }
@@ -101,7 +101,7 @@ fun Share(text:String, myViewModel: MyViewModel) {
         ContextCompat.startActivity(context, shareIntent, null)
     }) {
         Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
-            Icon(imageVector = Icons.Default.Share, contentDescription = "Esta es mi puntuación en TrivialApp!")
+            Icon(imageVector = Icons.Default.Share, contentDescription = "Share")
             Text(
                 text = "SHARE",
                 color = myViewModel.colorText,
